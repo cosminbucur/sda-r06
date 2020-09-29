@@ -1,39 +1,36 @@
-package com.sda.jdbc;
+package com.sda.jdbc.prepared_statement;
+
+import com.sda.jdbc.Book;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-// data access object
-public class BookJdbcDao {
+public class BookJdbcAdvancedDao {
 
     public static final String URL = "jdbc:mysql://localhost:3306/jdbc_tutorial?serverTimezone=UTC";
     public static final String USER = "root";
     public static final String PASSWORD = "Rootpass3#";
 
-    // create
     public void create(Book book) {
+        String sql = "INSERT INTO book(title, author) VALUES (?, ?)";
         try {
-            // add book in table
-            // get connection
             Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-            // create statement
-            Statement statement = connection.createStatement();
+            preparedStatement.setString(1, book.getTitle());
+            preparedStatement.setString(2, book.getAuthor());
 
-            // execute
-            // create sql
-            String sql = "INSERT INTO book(title, author) VALUES ('" + book.getTitle() + "', '" + book.getAuthor() + "')";
-            int rowsAffected = statement.executeUpdate(sql);
+            int rowsAffected = preparedStatement.executeUpdate();
 
             if (rowsAffected == 1) {
                 System.out.println("book saved");
             }
-            // close
+
             connection.close();
         } catch (SQLException e) {
             System.out.println("book not saved");
@@ -42,15 +39,13 @@ public class BookJdbcDao {
 
     public List<Book> findAll() {
         List<Book> result = new ArrayList<>();
-
+        String sql = "SELECT id, title, author FROM book";
         try {
             Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            Statement statement = connection.createStatement();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-            String sql = "SELECT id, title, author FROM book";
-            ResultSet resultSet = statement.executeQuery(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            // iterate result set and build the list
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String title = resultSet.getString("title");
@@ -66,16 +61,19 @@ public class BookJdbcDao {
         return result;
     }
 
-    // update
     public void update(int id, Book newBookData) {
-        Statement statement = null;
+        PreparedStatement preparedStatement = null;
         Connection connection = null;
+        String sql = "UPDATE book SET title = ?, author = ? WHERE id = ?";
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            statement = connection.createStatement();
-            String sql = "UPDATE book SET title = '" + newBookData.getTitle() + "', " +
-                "author = '" + newBookData.getAuthor() + "' WHERE id = " + id;
-            int rowsAffected = statement.executeUpdate(sql);
+            preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setString(1, newBookData.getTitle());
+            preparedStatement.setString(2, newBookData.getAuthor());
+            preparedStatement.setInt(3, id);
+
+            int rowsAffected = preparedStatement.executeUpdate();
 
             if (rowsAffected == 1) {
                 System.out.println("book updated");
@@ -85,14 +83,12 @@ public class BookJdbcDao {
         } catch (Exception e) {
             System.out.println("something went wrong");
         } finally {
-            // close resources
-
             try {
-                if (statement != null) {
-                    statement.close();
+                if (preparedStatement != null) {
+                    preparedStatement.close();
                 }
             } catch (SQLException e) {
-                System.out.println("failed to close statement");
+                System.out.println("failed to close preparedStatement");
             }
 
             try {
@@ -105,14 +101,13 @@ public class BookJdbcDao {
         }
     }
 
-    // delete
     public void delete(int id) {
-        // try with resources
+        String sql = "DELETE FROM book WHERE id = ?";
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-             Statement statement = connection.createStatement()) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
 
-            String sql = "DELETE FROM book WHERE id = " + id;
-            int rowsAffected = statement.executeUpdate(sql);
+            int rowsAffected = preparedStatement.executeUpdate();
 
             if (rowsAffected == 1) {
                 System.out.println("book updated");

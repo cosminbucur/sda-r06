@@ -1,8 +1,10 @@
-package com.sda.jdbc;
+package com.sda.jdbc.prepared_statement;
+
+import com.sda.jdbc.Book;
 
 import java.util.List;
 
-public class DemoStatements {
+public class DemoPreparedStatements {
 
     public static void main(String[] args) {
         // CRUD db
@@ -10,7 +12,7 @@ public class DemoStatements {
         Book book1 = new Book("game of thrones", "george martin");
         Book book2 = new Book("karamazov brothers", "dostoievski");
 
-        BookJdbcDao dao = new BookJdbcDao();
+        BookJdbcAdvancedDao dao = new BookJdbcAdvancedDao();
         dao.create(book1);
         dao.create(book2);
 
