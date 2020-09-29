@@ -14,17 +14,20 @@ public class DemoStatements {
         dao.create(book1);
         dao.create(book2);
 
-        // id, title, author
-        // 1, game of thrones, george martin
-        // insert into book values(....)
-
         // read
         List<Book> foundBooks = dao.findAll();
+        int idOfFirstBook = foundBooks.get(0).getId();
 
         // print found books
         foundBooks.forEach(book -> System.out.println(book));
 
         // update
+        Book newBookData = new Book("test", "updated");
+        dao.update(idOfFirstBook, newBookData);
+
         // delete
+        dao.delete(idOfFirstBook);
+
+        dao.findAll().forEach(book -> System.out.println(book));
     }
 }
