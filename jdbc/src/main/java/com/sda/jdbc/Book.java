@@ -7,7 +7,11 @@ public class Book {
     private String title;
     private String author;
 
-    // default constructor
+    public Book(int id, String title, String author) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+    }
 
     public Book(String title, String author) {
         this.title = title;
@@ -36,5 +40,14 @@ public class Book {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+            "id=" + id +
+            ", title='" + title + '\'' +
+            ", author='" + author + '\'' +
+            '}';
     }
 }
