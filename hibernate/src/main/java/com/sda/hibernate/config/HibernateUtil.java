@@ -1,12 +1,6 @@
 package com.sda.hibernate.config;
 
-import com.sda.hibernate.associations.one_to_many_bi.Child;
-import com.sda.hibernate.associations.one_to_many_bi.Parent;
-import com.sda.hibernate.associations.one_to_many_uni.Daughter;
-import com.sda.hibernate.associations.one_to_many_uni.Mother;
-import com.sda.hibernate.associations.one_to_many_uni_join.Father;
-import com.sda.hibernate.associations.one_to_many_uni_join.Son;
-import com.sda.hibernate.types.Player;
+import com.sda.hibernate.queries.hql.Stock;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -38,18 +32,37 @@ public class HibernateUtil {
         settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
         settings.put(Environment.SHOW_SQL, "true");
         settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-        settings.put(Environment.HBM2DDL_AUTO, "create-drop");
+        settings.put(Environment.HBM2DDL_AUTO, "update");
 
         configuration.setProperties(settings);
 
         // add annotated classes
-        configuration.addAnnotatedClass(Player.class);
-        configuration.addAnnotatedClass(Mother.class);
-        configuration.addAnnotatedClass(Daughter.class);
-        configuration.addAnnotatedClass(Father.class);
-        configuration.addAnnotatedClass(Son.class);
-        configuration.addAnnotatedClass(Child.class);
-        configuration.addAnnotatedClass(Parent.class);
+
+        // hibernate types
+//        configuration.addAnnotatedClass(Player.class);
+
+        // one to one
+//        configuration.addAnnotatedClass(Account.class);
+//        configuration.addAnnotatedClass(Employee.class);
+
+        // one to many unidirectional
+//        configuration.addAnnotatedClass(Mother.class);
+//        configuration.addAnnotatedClass(Daughter.class);
+
+        // one to many unidirectional join
+//        configuration.addAnnotatedClass(Father.class);
+//        configuration.addAnnotatedClass(Son.class);
+
+        // one to many bidirectional
+//        configuration.addAnnotatedClass(Child.class);
+//        configuration.addAnnotatedClass(Parent.class);
+//
+        // many to many bidirectional
+//        configuration.addAnnotatedClass(Post.class);
+//        configuration.addAnnotatedClass(Tag.class);
+
+        // HQL queries
+        configuration.addAnnotatedClass(Stock.class);
 
         return configuration;
     }

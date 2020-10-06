@@ -1,6 +1,6 @@
 package com.sda.hibernate.associations.one_to_many_bi;
 
-public class DemoOneToManyBidrectional {
+public class DemoOneToManyBidirectional {
 
     public static void main(String[] args) {
 
