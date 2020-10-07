@@ -1,6 +1,7 @@
 package com.sda.hibernate.config;
 
-import com.sda.hibernate.queries.hql.Stock;
+import com.sda.hibernate.audit.customer.Customer;
+import com.sda.hibernate.audit.history.CustomerHistory;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -11,8 +12,14 @@ import java.util.Properties;
 
 public class HibernateUtil {
 
-    // get a session factory
+    private static SessionFactory sessionFactory = buildSessionFactory();
+
     public static SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    // get a session factory
+    private static SessionFactory buildSessionFactory() {
         Configuration configuration = createConfig();
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
@@ -32,7 +39,7 @@ public class HibernateUtil {
         settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
         settings.put(Environment.SHOW_SQL, "true");
         settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-        settings.put(Environment.HBM2DDL_AUTO, "update");
+        settings.put(Environment.HBM2DDL_AUTO, "create");
 
         configuration.setProperties(settings);
 
@@ -62,7 +69,17 @@ public class HibernateUtil {
 //        configuration.addAnnotatedClass(Tag.class);
 
         // HQL queries
-        configuration.addAnnotatedClass(Stock.class);
+//        configuration.addAnnotatedClass(Stock.class);
+
+        // native queries
+//        configuration.addAnnotatedClass(Trader.class);
+
+        // entity states
+//        configuration.addAnnotatedClass(Person.class);
+
+        // audit
+        configuration.addAnnotatedClass(Customer.class);
+        configuration.addAnnotatedClass(CustomerHistory.class);
 
         return configuration;
     }

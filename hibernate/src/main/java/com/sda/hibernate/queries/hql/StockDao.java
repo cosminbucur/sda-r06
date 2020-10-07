@@ -14,13 +14,7 @@ public class StockDao {
 
     // TODO: use a logging framework log4j2 / slf4j
     // replace default java logger with a logging framework
-    private static final Logger logger = java.util.logging.Logger.getLogger(StockDao.class.getName());
-
-    public static void main(String[] args) {
-        logger.info("info message");
-        logger.warning("warn message");
-        logger.severe("error message");
-    }
+    private static final Logger logger = Logger.getLogger(StockDao.class.getName());
 
     // create
     public void create(Stock stock) {

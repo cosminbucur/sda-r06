@@ -14,7 +14,7 @@ public class BookJdbcAdvancedDao {
 
     public static final String URL = "jdbc:mysql://localhost:3306/jdbc_tutorial?serverTimezone=UTC";
     public static final String USER = "root";
-    public static final String PASSWORD = "Rootpass3#";
+    public static final String PASSWORD = "root";
 
     public void create(Book book) {
         String sql = "INSERT INTO book(title, author) VALUES (?, ?)";
