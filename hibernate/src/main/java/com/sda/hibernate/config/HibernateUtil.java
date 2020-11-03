@@ -1,7 +1,8 @@
 package com.sda.hibernate.config;
 
-import com.sda.hibernate.audit.customer.Customer;
-import com.sda.hibernate.audit.history.CustomerHistory;
+import com.sda.hibernate.queries.hql.Stock;
+import com.sda.hibernate.queries.hql_join.Author;
+import com.sda.hibernate.queries.hql_join.Book;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -69,7 +70,10 @@ public class HibernateUtil {
 //        configuration.addAnnotatedClass(Tag.class);
 
         // HQL queries
-//        configuration.addAnnotatedClass(Stock.class);
+        configuration.addAnnotatedClass(Stock.class);
+
+        configuration.addAnnotatedClass(Author.class);
+        configuration.addAnnotatedClass(Book.class);
 
         // native queries
 //        configuration.addAnnotatedClass(Trader.class);
@@ -78,8 +82,8 @@ public class HibernateUtil {
 //        configuration.addAnnotatedClass(Person.class);
 
         // audit
-        configuration.addAnnotatedClass(Customer.class);
-        configuration.addAnnotatedClass(CustomerHistory.class);
+//        configuration.addAnnotatedClass(Customer.class);
+//        configuration.addAnnotatedClass(CustomerHistory.class);
 
         return configuration;
     }
