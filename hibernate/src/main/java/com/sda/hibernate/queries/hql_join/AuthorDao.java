@@ -55,18 +55,4 @@ public class AuthorDao {
         return result;
     }
 
-    public List<Author> findUsingLikeQuery(String prefix) {
-        String hql = "SELECT a FROM Author a " +
-            "INNER JOIN a.books b " +
-            "WHERE b.title LIKE :prefix";
-        List<Author> result = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Author> query = session.createQuery(hql, Author.class);
-            query.setParameter("prefix", "%" + prefix + "%");
-            result = query.getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
 }

@@ -2,7 +2,6 @@ package com.sda.hibernate.queries.hql_join;
 
 import java.util.List;
 
-// https://dzone.com/articles/how-to-decide-between-join-and-join-fetch
 public class DemoHqlJoin {
 
     public static void main(String[] args) {
